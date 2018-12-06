@@ -64,9 +64,8 @@ class LogisticRegreesion:
 
         m = self.X.shape[1]
 
-        # 假设函数的激活值(正向传播)
-        # !不同于线性回归，这里用于分类，需要一个激活函数将值二分化(其中,训练集X的值需要预处理为0~1之间)
-        # 而且不能通过简单的判断大于0.5就为1，这样会出现梯度消失的问题
+        # 假设函数(正向传播)
+        # !不同于线性回归，这里用于分类，假设函数不同(其中,训练集X的值需要预处理为0~1之间)
         H = self.sigmoid(np.dot(self.W.T, self.X) + self.b)
 
         # 求偏导(反向传播)
@@ -74,7 +73,7 @@ class LogisticRegreesion:
         db = 1 / m * np.sum(H - self.Y)             # 注:没有进行过矩阵乘法运算，需要手动求和
 
         # 计算代价,记录代价(非必须操作,只是便于观察梯度下降的效果)
-        # !与线性回归不同的代价计算方法
+        # !与线性回归不同的代价计算方法(避免成为非凸函数)
         cost = (-1 / m) * np.sum(self.Y * np.log(H) + (1 - self.Y) * np.log(1 - H))
         self.costs.append(cost)
 
@@ -122,7 +121,7 @@ class LogisticRegreesion:
             predicted - 对于测试数据集X的预测结果
         '''
         # 带入参数w、b预测测试集
-        # !不同于线性回归,这里预测需要激活函数先分一次,再手动二值化
+        # !不同于线性回归,这里预测结果需要先激活函数激活后，再手动二值化
         T = self.sigmoid(np.dot(self.W.T, X) + self.b)
         # 将结果二值化
         predicted = []
