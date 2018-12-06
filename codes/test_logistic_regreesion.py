@@ -11,8 +11,8 @@ if __name__ == '__main__':
     # test_set_x_orig ：保存的是测试集里面的图像数据（本训练集有50张64x64的图像）。
     # test_set_y_orig ： 保存的是测试集的图像对应的分类值（【0 | 1】，0表示不是猫，1表示是猫）。
     # classes ： 保存的是以bytes类型保存的两个字符串数据，数据为：[b’non-cat’ b’cat’]。
-    train_dataset_path = '../datasets/train_catvnoncat.h5'
-    test_dataset_path = '../datasets/test_catvnoncat.h5'
+    train_dataset_path = '../../datasets/train_catvnoncat.h5'
+    test_dataset_path = '../../datasets/test_catvnoncat.h5'
     def load_dataset():
         train_dataset = h5py.File(train_dataset_path, 'r')
         train_set_x_orig = np.array(train_dataset["train_set_x"][:])
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     # 1.一维化
     train_set_x_flatten = train_set_x_orig.reshape(train_set_x_orig.shape[0], -1).T   # -1表示剩下的列自动算（每一列为一个图，每列的每个元素相当于一个参数）
     test_set_x_flatten = test_set_x_orig.reshape(test_set_x_orig.shape[0], -1).T
-    # 2.数据预处理 - 转为[0-1]区间的浮点数
+    # 2.数据预处理 - 转为合适范围,这里可以尝试[0~1]、[-0.5~0.5]、[0~2]区间的浮点数
     train_set_x = train_set_x_flatten / 255
     test_set_x = test_set_x_flatten / 255
 
@@ -48,8 +48,15 @@ if __name__ == '__main__':
     lr.fit(train_set_x, train_set_y)
     lr.train(0.005, 2000)
     predicted = lr.predict(test_set_x)
+
+    # 显示结果对比、准确率
     print(predicted)
     print(test_set_y)
+    r = 0
+    for i in range(len(predicted)):
+        if predicted[i] == test_set_y[i]:
+            r += 1
+    print(f'准确率:{r/len(predicted) * 100}%')
 
     # 显示代价函数迭代
     x = [xx for xx in range(1, 2001)]
