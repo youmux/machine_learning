@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # 线性回归
     lr = LinearRegreesion()
     lr.fit(X_train, Y_train)
-    lr.train(0.005, 2000)
+    lr.train(0.005, 200)
     predicted = lr.predict(X_test)
 
     # 显示
@@ -27,6 +27,6 @@ if __name__ == '__main__':
     plt.plot(X_test, Y_test, color = 'red')
     # 迭代代价图
     plt.subplot(1,2,2)
-    x = [xx for xx in range(1, 2001)]
+    x = [xx for xx in range(200)]
     plt.plot(x, lr.costs)
     plt.show()

@@ -11,8 +11,8 @@ if __name__ == '__main__':
     # test_set_x_orig ：保存的是测试集里面的图像数据（本训练集有50张64x64的图像）。
     # test_set_y_orig ： 保存的是测试集的图像对应的分类值（【0 | 1】，0表示不是猫，1表示是猫）。
     # classes ： 保存的是以bytes类型保存的两个字符串数据，数据为：[b’non-cat’ b’cat’]。
-    train_dataset_path = '../../datasets/train_catvnoncat.h5'
-    test_dataset_path = '../../datasets/test_catvnoncat.h5'
+    train_dataset_path = '../datasets/train_catvnoncat.h5'
+    test_dataset_path = '../datasets/test_catvnoncat.h5'
     def load_dataset():
         train_dataset = h5py.File(train_dataset_path, 'r')
         train_set_x_orig = np.array(train_dataset["train_set_x"][:])
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # 逻辑回归
     lr = LogisticRegreesion()
     lr.fit(train_set_x, train_set_y)
-    lr.train(0.005, 2000)
+    lr.train(0.003, 20000)
     predicted = lr.predict(test_set_x)
 
     # 显示结果对比、准确率
@@ -59,6 +59,6 @@ if __name__ == '__main__':
     print(f'准确率:{r/len(predicted) * 100}%')
 
     # 显示代价函数迭代
-    x = [xx for xx in range(1, 2001)]
+    x = [xx for xx in range(20000)]
     plt.plot(x, lr.costs)
     plt.show()

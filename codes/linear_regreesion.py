@@ -59,13 +59,13 @@ class LinearRegreesion:
         # 假设函数的激活值(正向传播)
         H = np.dot(self.W.T, self.X) + self.b
 
-        # 求偏导(反向传播)
-        dW = 1 / m * np.dot(self.X, (H - self.Y).T) # 注:矩阵点乘后，已经求过和
-        db = 1 / m * np.sum(H - self.Y)             # 注:没有进行过矩阵乘法运算，需要手动求和
-
         # 计算代价,记录代价(非必须操作,只是便于观察梯度下降的效果)
-        cost = (1 / m) * np.sum(H - self.Y)
+        cost = (1 / (2 * m)) * np.sum(H - self.Y) ** 2
         self.costs.append(cost)
+
+        # 求偏导(反向传播)
+        dW = 1 / m * np.dot(self.X, (H - self.Y).T) # 注:矩阵点乘后,已经求过和
+        db = 1 / m * np.sum(H - self.Y)             # 注:没有进行过矩阵乘法运算,需要手动求和
 
         return dW, db
 
@@ -82,7 +82,7 @@ class LinearRegreesion:
         for i in range(self.num_iter):
             dW, db = self.partial_derivative()
             
-            # 梯度下降，优化参数W、b
+            # 梯度下降,优化参数W、b
             self.W = self.W - self.learning_rate * dW
             self.b = self.b - self.learning_rate * db
 

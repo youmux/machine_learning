@@ -3,7 +3,7 @@ import numpy as np
 class LogisticRegreesion:
     '''
     逻辑回归
-    # !不同于线性回归的地方，用'# !'标注了
+    # !不同于线性回归的地方,用'# !'标注了
 
     参数:
         X - 训练集(需要将训练集的特征缩放到合适范围,并将参数以列向量重排)
@@ -46,7 +46,7 @@ class LogisticRegreesion:
 
 
     # 创建激活函数
-    # !不同于线性回归，这里用于分类，需要一个激活函数将值二分化
+    # !不同于线性回归,这里用于分类,需要一个激活函数将值二分化
     def sigmoid(self, z):
         s = 1 / (1 + np.exp(-z))
         return s
@@ -65,19 +65,22 @@ class LogisticRegreesion:
         m = self.X.shape[1]
 
         # 假设函数(正向传播)
-        # !不同于线性回归，这里用于分类，假设函数不同(其中,训练集X的值需要预处理到合适范围(如,-0.5~0.5或0~1之间等等),避免不能正确的进行学习
-        # 特征缩放:结合理论+实际来看,最好是能将特征缩放到sigmoid中间变化幅度大的地方，避免与学习速率不匹配，导致很难收敛到最优解
-        # (如一个图像的颜色在0~255直接,不进行特征缩放的化,基本上大部分值都会在sigmoid中使输出非常接近于1,尽管没有出现梯度消失的情况，但学习速率极慢)
+        # !不同于线性回归,这里用于分类,假设函数不同(其中,训练集X的值需要预处理到合适范围(如,-0.5~0.5或0~1之间等等),避免不能正确的进行学习
+        # 特征缩放:结合理论+实际来看,最好是能将特征缩放到sigmoid中间变化幅度大的地方,避免与学习速率不匹配,导致很难收敛到最优解
+        # (如一个图像的颜色在0~255直接,不进行特征缩放的化,基本上大部分值都会在sigmoid中使输出非常接近于1,尽管没有出现梯度消失的情况,但学习速率极慢)
         H = self.sigmoid(np.dot(self.W.T, self.X) + self.b)
 
-        # 求偏导(反向传播)
-        dW = 1 / m * np.dot(self.X, (H - self.Y).T) # 注:矩阵点乘后，已经求过和
-        db = 1 / m * np.sum(H - self.Y)             # 注:没有进行过矩阵乘法运算，需要手动求和
-
         # 计算代价,记录代价(非必须操作,只是便于观察梯度下降的效果)
-        # !与线性回归不同的代价计算方法(避免成为非凸函数)
+        # !直接计算sum(h-y),尽管在线性回归中好用,但在逻辑回归中能用,由于假设函数h是非线性函数,故可能会出现非凸的代价函数,导致只能找到局部最优,而不是全局最优
         cost = (-1 / m) * np.sum(self.Y * np.log(H) + (1 - self.Y) * np.log(1 - H))
         self.costs.append(cost)
+
+        # 求偏导(反向传播)
+        # !与线性回归不同的代价计算方法(避免成为非凸函数),故计算后的导数式子也不同
+        # ?不理解为何Andrew Ng(第50课)对J代价函数求偏导为何是和线性回归的式子一样
+        # ?!这篇github给出了证明,幸运的是的确和线性回归中J的求导结果一致: https://github.com/halfrost/Halfrost-Field/blob/master/contents/Machine_Learning/Logistic_Regression.ipynb
+        dW = 1 / m * np.dot(self.X, (H - self.Y).T)
+        db = 1 / m * np.sum(H - self.Y)
 
         return dW, db
 
@@ -94,7 +97,7 @@ class LogisticRegreesion:
         for i in range(self.num_iter):
             dW, db = self.partial_derivative()
             
-            # 梯度下降，优化参数W、b
+            # 梯度下降,优化参数W、b
             self.W = self.W - self.learning_rate * dW
             self.b = self.b - self.learning_rate * db
 
@@ -123,7 +126,7 @@ class LogisticRegreesion:
             predicted - 对于测试数据集X的预测结果
         '''
         # 带入参数w、b预测测试集
-        # !不同于线性回归,这里预测结果需要先激活函数激活后，再手动二值化
+        # !不同于线性回归,这里预测结果需要先激活函数激活后,再手动二值化
         T = self.sigmoid(np.dot(self.W.T, X) + self.b)
         # 将结果二值化
         predicted = []
