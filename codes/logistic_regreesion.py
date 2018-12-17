@@ -45,13 +45,6 @@ class LogisticRegreesion:
         self.costs = []
 
 
-    # 创建激活函数
-    # !不同于线性回归,这里用于分类,需要一个激活函数将值二分化
-    def sigmoid(self, z):
-        s = 1 / (1 + np.exp(-z))
-        return s
-
-
     # 对代价函数J求导
     # h(x) = W * x + b
     def partial_derivative(self):
@@ -67,8 +60,8 @@ class LogisticRegreesion:
         # 假设函数(正向传播)
         # !不同于线性回归,这里用于分类,假设函数不同(其中,训练集X的值需要预处理到合适范围(如,-0.5~0.5或0~1之间等等),避免不能正确的进行学习
         # 特征缩放:结合理论+实际来看,最好是能将特征缩放到sigmoid中间变化幅度大的地方,避免与学习速率不匹配,导致很难收敛到最优解
-        # (如一个图像的颜色在0~255直接,不进行特征缩放的化,基本上大部分值都会在sigmoid中使输出非常接近于1,尽管没有出现梯度消失的情况,但学习速率极慢)
-        H = self.sigmoid(np.dot(self.W.T, self.X) + self.b)
+        # (如一个图像的颜色在0~255直接,不进行特征缩放的话,基本上大部分值都会在sigmoid中使输出非常接近于1,尽管没有出现梯度消失的情况,但学习速率极慢)
+        H = 1 / (1 + np.exp(-(np.dot(self.W.T, self.X) + self.b)))
 
         # 计算代价,记录代价(非必须操作,只是便于观察梯度下降的效果)
         # !直接计算sum(h-y),尽管在线性回归中好用,但在逻辑回归中能用,由于假设函数h是非线性函数,故可能会出现非凸的代价函数,导致只能找到局部最优,而不是全局最优
@@ -126,8 +119,8 @@ class LogisticRegreesion:
             predicted - 对于测试数据集X的预测结果
         '''
         # 带入参数w、b预测测试集
-        # !不同于线性回归,这里预测结果需要先激活函数激活后,再手动二值化
-        T = self.sigmoid(np.dot(self.W.T, X) + self.b)
+        # !不同于线性回归,这里将测试集数据代入假设函数计算,再手动二值化
+        T = 1 / (1 + np.exp(-(np.dot(self.W.T, X) + self.b)))
         # 将结果二值化
         predicted = []
         for i in range(T.shape[1]):
