@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import os
-from logistic_regreesion import LogisticRegreesion
+from logistic_regression import LogisticRegression
 
 if __name__ == '__main__':
     # 加载数据
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     # 逻辑回归
     N = 2000
-    lr = LogisticRegreesion()
+    lr = LogisticRegression()
     lr.fit(train_set_x, train_set_y)
     lr.train(0.003, N)
     predicted = lr.predict(test_set_x)

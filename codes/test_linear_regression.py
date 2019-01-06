@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from linear_regreesion import LinearRegreesion
+from linear_regression import LinearRegression
 import random
 
 if __name__ == '__main__':
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     X_test = X_test.reshape(1, X_test.shape[0])
 
     # 线性回归
-    lr = LinearRegreesion()
+    lr = LinearRegression()
     lr.fit(X_train, Y_train)
     lr.train(0.005, 200)
     predicted = lr.predict(X_test)
