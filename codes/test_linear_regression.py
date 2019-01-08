@@ -11,10 +11,12 @@ if __name__ == '__main__':
     X_test = np.arange(1, 30, 1)
     X_test = X_test.reshape(1, X_test.shape[0])
 
+    N = 200 # 迭代次数
+
     # 线性回归
     lr = LinearRegression()
     lr.fit(X_train, Y_train)
-    lr.train(0.005, 200)
+    lr.train(0.005, N)
     predicted = lr.predict(X_test)
 
     # 显示
@@ -27,6 +29,6 @@ if __name__ == '__main__':
     plt.plot(X_test, Y_test, color = 'red')
     # 迭代代价图
     plt.subplot(1,2,2)
-    x = [xx for xx in range(200)]
+    x = [xx for xx in range(N)]
     plt.plot(x, lr.costs)
     plt.show()

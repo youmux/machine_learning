@@ -57,11 +57,7 @@ if __name__ == '__main__':
     print(predicted)
     print('测试集结果：', end = '')
     print(test_set_y)
-    r = 0
-    for i in range(len(predicted)):
-        if predicted[i] == test_set_y[i]:
-            r += 1
-    print(f'准确率:{r/len(predicted) * 100}%')
+    print(f'准确率:{np.mean(np.equal(test_set_y, predicted)) * 100}%')
 
     # 显示代价函数迭代
     x = [xx for xx in range(N)]

@@ -120,9 +120,9 @@ class LogisticRegression:
         '''
         # 带入参数w、b预测测试集
         # !不同于线性回归,这里将测试集数据代入假设函数计算,再手动二值化
-        T = 1 / (1 + np.exp(-(np.dot(self.W.T, X) + self.b)))
+        predicted = 1 / (1 + np.exp(-(np.dot(self.W.T, X) + self.b)))
         # 将结果二值化
-        predicted = []
-        for i in range(T.shape[1]):
-            predicted.append(1 if T[0,i] > 0.5 else 0)
+        predicted = np.round(predicted)
+        predicted = predicted.astype(np.int)
+
         return predicted
