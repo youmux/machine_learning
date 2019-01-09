@@ -101,9 +101,7 @@ class NeuralNetworksLogisticRegression:
         A3 = 1 / (1 + np.exp(-Z3))
 
         cache = {
-            'Z2': Z2,
             'A2': A2,
-            'Z3': Z3,
             'A3': A3
         }
         return cache
