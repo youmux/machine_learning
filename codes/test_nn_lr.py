@@ -44,12 +44,36 @@ def plot_decision_boundary(model, X, y):
 
 
 if __name__ == "__main__":
-    # np.random.seed(1)
-
+    # 加载数据
     X, Y = load_planar_dataset()
+
+    N = 20000   # 迭代次数
+
+    # 神经网络的逻辑回归
+    nn_lr = NeuralNetworksLogisticRegression()
+    nn_lr.fit(X, Y, n_h=4)
+    nn_lr.train(learning_rate=0.05, num_iter=N)
+    predicted = nn_lr.predict(X)
+
+    print(f'神经网络逻辑回归准确率为:{np.mean(np.equal(Y, predicted)) * 100} %')
+
+    # 决策边界图
+    plt.subplot(1,2,1)
+    plot_decision_boundary(lambda x:nn_lr.predict(x.T), X, Y)   # 边界是用等高线绘制的
+    # 迭代代价图
+    plt.subplot(1,2,2)
+    x = [xx for xx in range(N)]
+    plt.plot(x, nn_lr.costs)
+    plt.show()
+    plt.show()
+
+
 
     '''
     # 逻辑回归的效果
+    import sklearn
+    import sklearn.datasets
+    from sklearn import linear_model
 
     # 查看logistic回归分类效果
     clf = linear_model.LogisticRegressionCV()
@@ -65,24 +89,3 @@ if __name__ == "__main__":
 
     plt.show()
     '''
-
-
-    N = 20000   # 迭代次数
-
-    # 神经网络的逻辑回归
-    nn_lr = NeuralNetworksLogisticRegression()
-    nn_lr.fit(X, Y, n_h=4)
-    nn_lr.train(learning_rate=0.05, num_iter=N)
-    predicted = nn_lr.predict(X)
-
-    print(f'准确率为:{np.mean(np.equal(Y, predicted)) * 100} %')
-
-    # 决策边界图
-    plt.subplot(1,2,1)
-    plot_decision_boundary(lambda x:nn_lr.predict(x.T), X, Y)   # 边界是用等高线绘制的
-    # 迭代代价图
-    plt.subplot(1,2,2)
-    x = [xx for xx in range(N)]
-    plt.plot(x, nn_lr.costs)
-    plt.show()
-    plt.show()
