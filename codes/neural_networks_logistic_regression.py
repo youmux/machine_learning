@@ -55,6 +55,7 @@ class NeuralNetworksLogisticRegression:
 
         [输入层的激活函数] [隐藏层的激活函数]
         g1(x)=tanh(z)   g2(x)=1/(1+np.exp(-z))
+        (这里对不同层使用了不同的激活函数)
         3.用随机数矩阵初始化权重矩阵，用零矩阵初始化偏移
 
         参数:
