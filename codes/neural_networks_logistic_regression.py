@@ -3,14 +3,15 @@ import numpy as np
 class NeuralNetworksLogisticRegression:
     '''
     神经网络逻辑回归
+    (仅1层隐藏层)
 
     参数:
         X - 训练集(需要将训练集的特征缩放到合适范围,并将参数以列向量重排)
         Y - 训练集的结果(取值为0|1)
         m - 样本数量
-        W1 - 输入层的权重矩阵
+        W1 - 输入层的权重矩阵(W1,b1以行向量作特征,减少.T转置运算,便于计算)
         b1 - 输入层的常数项权重
-        W2 - 隐藏层的权重矩阵
+        W2 - 隐藏层的权重矩阵(W2,b2以列向量作特征,这样才能正确做隐藏层的矩阵运算)
         b2 - 隐藏层的常数项权重
         learning_rate - 学习速率
         num_iter - 迭代次数
@@ -21,7 +22,7 @@ class NeuralNetworksLogisticRegression:
     
     使用:
         nn_lr = NeuralNetworksLogisticRegression()
-        nn_lr.fit(X, Y, n_h=4)
+        nn_lr.init(X, Y, n_h=4)
         nn_lr.train(learning_rate=0.05, num_iter=1000)
         predicted = nn_lr.predict(X)
     '''
@@ -41,7 +42,7 @@ class NeuralNetworksLogisticRegression:
 
 
     # 初始化变量
-    def fit(self, X, Y, n_h=1):
+    def init(self, X, Y, n_h=1):
         '''
         1.加载训练集,并设置一些初始值
         2.设置神经网络的结构，对每层设置数量
