@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     # 1.逻辑回归
     lr = LogisticRegression()
-    lr.init(X, Y)
+    lr.initialize_parameters(X, Y)
     lr.train(0.05, N)
     predicted = lr.predict(X)   # 预测结果
     print(f'逻辑回归的准确率:{np.mean(np.equal(Y, predicted)) * 100}%')
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     # 2.神经网络的逻辑回归
     nn_lr = NeuralNetworksLogisticRegression()
-    nn_lr.init(X, Y, n_h=4)
+    nn_lr.initialize_parameters(X, Y, n_h=4)
     nn_lr.train(learning_rate=0.05, num_iter=N)
     predicted = nn_lr.predict(X)
     print(f'神经网络逻辑归回的准确率为:{np.mean(np.equal(Y, predicted)) * 100} %')

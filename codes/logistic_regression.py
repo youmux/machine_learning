@@ -16,7 +16,7 @@ class LogisticRegression:
     
     使用:
         lg = LogisticRegression()
-        lg.init(X_train, Y_train)
+        lg.initialize_parameters(X_train, Y_train)
         lg.train(0.001, 2000)
         predicted = lg.predict(X_test)
     '''
@@ -30,7 +30,7 @@ class LogisticRegression:
 
 
     # 初始化变量
-    def init(self, X, Y):
+    def initialize_parameters(self, X, Y):
         '''
         加载训练集,并设置一些初始值
 

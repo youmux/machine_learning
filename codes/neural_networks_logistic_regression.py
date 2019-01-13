@@ -22,7 +22,7 @@ class NeuralNetworksLogisticRegression:
     
     使用:
         nn_lr = NeuralNetworksLogisticRegression()
-        nn_lr.init(X, Y, n_h=4)
+        nn_lr.initialize_parameters(X, Y, n_h=4)
         nn_lr.train(learning_rate=0.05, num_iter=1000)
         predicted = nn_lr.predict(X)
     '''
@@ -42,7 +42,7 @@ class NeuralNetworksLogisticRegression:
 
 
     # 初始化变量
-    def init(self, X, Y, n_h=1):
+    def initialize_parameters(self, X, Y, n_h=1):
         '''
         1.加载训练集,并设置一些初始值
         2.设置神经网络的结构，对每层设置数量

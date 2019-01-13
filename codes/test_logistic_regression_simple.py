@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # 逻辑回归
     N = 2000
     lr = LogisticRegression()
-    lr.init(train_set_x, train_set_y)
+    lr.initialize_parameters(train_set_x, train_set_y)
     lr.train(0.003, N)
     predicted = lr.predict(test_set_x)
 

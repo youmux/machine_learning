@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     # 线性回归
     lr = LinearRegression()
-    lr.init(X_train, Y_train)
+    lr.initialize_parameters(X_train, Y_train)
     lr.train(0.005, N)
     predicted = lr.predict(X_test)
 
