@@ -29,6 +29,5 @@ if __name__ == '__main__':
     plt.plot(X_test, Y_test, color = 'red')
     # 迭代代价图
     plt.subplot(1,2,2)
-    x = [xx for xx in range(N)]
-    plt.plot(x, lr.costs)
+    plt.plot([x for x in range(N)], lr.costs)
     plt.show()

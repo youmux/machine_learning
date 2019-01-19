@@ -79,6 +79,5 @@ if __name__ == "__main__":
     plot_decision_boundary(lambda x:nn_lr.predict(x.T), X, Y)   # 边界是用等高线绘制的
     # 迭代代价图
     plt.subplot(2,2,4)
-    x = [xx for xx in range(N)]
-    plt.plot(x, nn_lr.costs)
+    plt.plot([x for x in range(N)], nn_lr.costs)
     plt.show()

@@ -54,6 +54,5 @@ if __name__ == '__main__':
     print(f'准确率:{np.mean(np.equal(test_set_y, predicted)) * 100}%')
 
     # 显示代价函数迭代
-    x = [xx for xx in range(N)]
-    plt.plot(x, lr.costs)
+    plt.plot([x for x in range(N)], lr.costs)
     plt.show()
