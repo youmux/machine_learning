@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     def load_dataset(dataset_path):
         images = []
-        m = 0
+        targets = []
 
         path_root = os.listdir(dataset_path)
         for path_root_dir in path_root: # 目录下
@@ -24,22 +24,16 @@ if __name__ == '__main__':
             for path in train_sets_path:
                 image = Image.open(path)    # 加载图片
                 image_array = np.array(image)   # 转为矩阵
-                image_array_reshape = image_array.reshape(1, image_array.shape[0]*image_array.shape[1]) # 改变形状
-                image_array_reshape_scale = image_array_reshape / 255   # 缩放
+                image_array_ravel = image_array.ravel() # 改变形状
+                image_array_ravel_scale = image_array_ravel / 255   # 缩放
+                images.append(image_array_ravel_scale)
 
-                # 转为列表，为每个数据添加结果值(很low的方式)
-                li = list(image_array_reshape_scale[0])
                 l = path.split('/')
-                li.append(1.0 if l[-2] == '0' else 0.0) # 不属于数字0的目录下的图片，结果都设为0
-                images.append(li)
-
-        images = np.stack(images, axis=1)   # 将数组纵向堆叠
-        np.random.shuffle(images.T)     # 随机排位置
-        X = images[:-1] # 取出训练数据
-        Y = images[-1]  # 取出数据集结果
-        Y = Y.astype(int)
-
-        return X, Y
+                targets.append(1.0 if l[-2] == '0' else 0.0) # 不属于数字0的目录下的图片，结果都设为0
+                
+        X = np.stack(images)                 # 取出训练数据
+        Y = np.array(targets, ndmin=2).T     # 取出数据集结果
+        return X.T, Y.T
 
     # 加载数据
     train_set_x, train_set_y = load_dataset(train_dataset_path)
